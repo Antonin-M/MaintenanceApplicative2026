@@ -95,14 +95,12 @@ public class Game implements IGame {
    }
 
    private void askQuestion() {
-      if (currentCategory() == "Pop")
-         System.out.println(popQuestions.removeFirst());
-      if (currentCategory() == "Science")
-         System.out.println(scienceQuestions.removeFirst());
-      if (currentCategory() == "Sports")
-         System.out.println(sportsQuestions.removeFirst());
-      if (currentCategory() == "Rock")
-         System.out.println(rockQuestions.removeFirst());
+      switch (currentCategory()) {
+         case "Pop" -> System.out.println(popQuestions.removeFirst());
+         case "Science" -> System.out.println(scienceQuestions.removeFirst());
+         case "Sports" -> System.out.println(sportsQuestions.removeFirst());
+         case "Rock" -> System.out.println(rockQuestions.removeFirst());
+       }
    }
 
 
