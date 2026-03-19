@@ -16,12 +16,6 @@ public class Game implements IGame {
    LinkedList sportsQuestions = new LinkedList();
    LinkedList rockQuestions = new LinkedList();
 
-   Map<String, int[]> categories = Map.of(
-   "Pop", new int[]{0, 4, 8},
-   "Science", new int[]{1, 5, 9},
-   "Sports", new int[]{2, 6, 10}
-   );
-
    int currentPlayer = 0;
    boolean isGettingOutOfPenaltyBox;
 
@@ -66,8 +60,8 @@ public class Game implements IGame {
             System.out.println(curPlayer.getName() + " is getting out of the penalty box");
             movePlayer(curPlayer,roll);
          } else {
-            System.out.println(curPlayer.getName() + " is not getting out of the penalty box");
             isGettingOutOfPenaltyBox = false;
+            System.out.println(curPlayer.getName() + " is not getting out of the penalty box");
          }
       } else {
          movePlayer(curPlayer, roll);
@@ -86,48 +80,24 @@ public class Game implements IGame {
 
 
    private String currentCategory() {
-      for (Map.Entry<String, int[]> t : categories.entrySet()) {
-         for (int value : t.getValue()) {
-            if (value == players.get(currentPlayer).getPlace()-1) {
-               return t.getKey();
-            }
-         }
-      }
-      return "Rock";
+      return Category.categoryFromPlace(players.get(currentPlayer).getPlace()).toString();
    }
 
    public boolean handleCorrectAnswer() {
       Player curPlayer = players.get(currentPlayer);
-      if (curPlayer.isInPenaltyBox()) {
-         if (isGettingOutOfPenaltyBox) {
-            System.out.println("Answer was corrent!!!!");
-            curPlayer.addCoins();
-            printGoldPlayer(curPlayer);
 
-            boolean winner = didPlayerWin();
-            changeCurrentPlayer();
-            if (currentPlayer == players.size()) currentPlayer = 0;
-
-            return winner;
-         } else {
-            changeCurrentPlayer();
-            if (currentPlayer == players.size()) currentPlayer = 0;
-            return true;
-         }
-
-
-      } else {
-
-         System.out.println("Answer was corrent!!!!");
-         curPlayer.addCoins();
-         printGoldPlayer(curPlayer);
-
-         boolean winner = didPlayerWin();
+      if (curPlayer.isInPenaltyBox() && !isGettingOutOfPenaltyBox) {
          changeCurrentPlayer();
-         if (currentPlayer == players.size()) currentPlayer = 0;
-
-         return winner;
+         return true;
       }
+
+      System.out.println("Answer was corrent!!!!");
+      curPlayer.addCoins();
+      printGoldPlayer(curPlayer);
+
+      boolean winner = didPlayerWin();
+      changeCurrentPlayer();
+      return winner;
    }
 
    public boolean wrongAnswer() {
@@ -136,7 +106,6 @@ public class Game implements IGame {
       players.get(currentPlayer).setInPenaltyBox(true);
 
       changeCurrentPlayer();
-      if (currentPlayer == players.size()) currentPlayer = 0;
       return true;
    }
 
@@ -150,8 +119,7 @@ public class Game implements IGame {
    }
 
    private void movePlayer(Player player, int amount) {
-      int newPlace = player.getPlace() + amount;
-      if (newPlace > 12) newPlace = newPlace-12;
+      int newPlace = (player.getPlace() -1 + amount) % NOMBRE_CASES+1;
       player.setPlace(newPlace);
       System.out.println(player.getName() + "'s new location is " + newPlace);
       System.out.println("The category is " + currentCategory());
