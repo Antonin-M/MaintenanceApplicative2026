@@ -1,7 +1,9 @@
 package trivia;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 // REFACTOR ME
 public class Game implements IGame {
@@ -14,6 +16,12 @@ public class Game implements IGame {
    LinkedList scienceQuestions = new LinkedList();
    LinkedList sportsQuestions = new LinkedList();
    LinkedList rockQuestions = new LinkedList();
+
+   Map<String, int[]> categories = Map.of(
+   "Pop", new int[]{0, 4, 8},
+   "Science", new int[]{1, 5, 9},
+   "Sports", new int[]{2, 6, 10}
+   );
 
    int currentPlayer = 0;
    boolean isGettingOutOfPenaltyBox;
@@ -99,15 +107,13 @@ public class Game implements IGame {
 
 
    private String currentCategory() {
-      if (places[currentPlayer] - 1 == 0) return "Pop";
-      if (places[currentPlayer] - 1 == 4) return "Pop";
-      if (places[currentPlayer] - 1 == 8) return "Pop";
-      if (places[currentPlayer] - 1 == 1) return "Science";
-      if (places[currentPlayer] - 1 == 5) return "Science";
-      if (places[currentPlayer] - 1 == 9) return "Science";
-      if (places[currentPlayer] - 1 == 2) return "Sports";
-      if (places[currentPlayer] - 1 == 6) return "Sports";
-      if (places[currentPlayer] - 1 == 10) return "Sports";
+      for (Map.Entry<String, int[]> t : categories.entrySet()) {
+         for (int value : t.getValue()) {
+            if (value == places[currentPlayer]-1) {
+               return t.getKey();
+            }
+         }
+      }
       return "Rock";
    }
 
