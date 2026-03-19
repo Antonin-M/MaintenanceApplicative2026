@@ -8,6 +8,9 @@ import java.util.Map;
 public class Game implements IGame {
    private final ArrayList<Player> players = new ArrayList<>();
 
+   public final int NOMBRE_CASES = 12;
+   public final int COINS_GAGNANT = 6;
+
    LinkedList popQuestions = new LinkedList();
    LinkedList scienceQuestions = new LinkedList();
    LinkedList sportsQuestions = new LinkedList();
@@ -60,33 +63,14 @@ public class Game implements IGame {
       if (curPlayer.isInPenaltyBox()) {
          if (roll % 2 != 0) {
             isGettingOutOfPenaltyBox = true;
-
             System.out.println(curPlayer.getName() + " is getting out of the penalty box");
-            int newPlace = curPlayer.getPlace() + roll;
-            if (newPlace > 12) newPlace = newPlace-12;
-            curPlayer.setPlace(newPlace);
-
-            System.out.println(curPlayer.getName()
-                               + "'s new location is "
-                               + curPlayer.getPlace());
-            System.out.println("The category is " + currentCategory());
-            askQuestion();
+            movePlayer(curPlayer,roll);
          } else {
             System.out.println(curPlayer.getName() + " is not getting out of the penalty box");
             isGettingOutOfPenaltyBox = false;
          }
-
       } else {
-
-         int newPlace = curPlayer.getPlace() + roll;
-         if (newPlace > 12) newPlace = newPlace-12;
-         curPlayer.setPlace(newPlace);
-
-         System.out.println(curPlayer.getName()
-                            + "'s new location is "
-                            + curPlayer.getPlace());
-         System.out.println("The category is " + currentCategory());
-         askQuestion();
+         movePlayer(curPlayer, roll);
       }
 
    }
@@ -118,10 +102,7 @@ public class Game implements IGame {
          if (isGettingOutOfPenaltyBox) {
             System.out.println("Answer was corrent!!!!");
             curPlayer.addCoins();
-            System.out.println(curPlayer.getName()
-                               + " now has "
-                               + curPlayer.getCoins()
-                               + " Gold Coins.");
+            printGoldPlayer(curPlayer);
 
             boolean winner = didPlayerWin();
             changeCurrentPlayer();
@@ -139,10 +120,7 @@ public class Game implements IGame {
 
          System.out.println("Answer was corrent!!!!");
          curPlayer.addCoins();
-         System.out.println(curPlayer.getName()
-                            + " now has "
-                            + curPlayer.getCoins()
-                            + " Gold Coins.");
+         printGoldPlayer(curPlayer);
 
          boolean winner = didPlayerWin();
          changeCurrentPlayer();
@@ -157,17 +135,30 @@ public class Game implements IGame {
       System.out.println(players.get(currentPlayer).getName() + " was sent to the penalty box");
       players.get(currentPlayer).setInPenaltyBox(true);
 
-      currentPlayer++;
+      changeCurrentPlayer();
       if (currentPlayer == players.size()) currentPlayer = 0;
       return true;
    }
 
 
    private boolean didPlayerWin() {
-      return !(players.get(currentPlayer).getCoins() == 6);
+      return !(players.get(currentPlayer).getCoins() == COINS_GAGNANT);
    }
 
    private void changeCurrentPlayer() {
       currentPlayer = (currentPlayer+1) % players.size();
+   }
+
+   private void movePlayer(Player player, int amount) {
+      int newPlace = player.getPlace() + amount;
+      if (newPlace > 12) newPlace = newPlace-12;
+      player.setPlace(newPlace);
+      System.out.println(player.getName() + "'s new location is " + newPlace);
+      System.out.println("The category is " + currentCategory());
+      askQuestion();
+   }
+
+   private void printGoldPlayer(Player player) {
+      System.out.println(player.getName() + " now has " + player.getCoins() + " Gold Coins.");
    }
 }
