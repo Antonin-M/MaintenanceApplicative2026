@@ -69,11 +69,28 @@ class TestCalendar {
      assertEquals(0, calendar.eventsDansPeriode(LocalDateTime.of(2026, 4, 14, 15, 45), LocalDateTime.of(2026, 6, 14, 15, 45)).size());
     }
 
-    @Test void RecupererDansPeriode() {
+    @Test
+    void RecupererDansPeriode() {
      CalendarManager calendar = new CalendarManager();
-     calendar.ajouterEvent("RDV_PERSONNEL", "rdvPerso", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), -5, "", "", 0);
+     calendar.ajouterEvent("RDV_PERSONNEL", "rdvPerso", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), 35, "", "", 0);
      assertEquals(calendar.events, calendar.eventsDansPeriode(LocalDateTime.of(2026, 4, 14, 15, 45), LocalDateTime.of(2026, 6, 14, 15, 45)));
 
+    }
+
+    @Test
+    void ConflitHorraireTrue() {
+       CalendarManager calendar = new CalendarManager();
+        calendar.ajouterEvent("RDV_PERSONNEL", "rdvPerso", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), 35, "", "", 0);
+        calendar.ajouterEvent("RDV_PERSONNEL", "rdvPerso2", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 50), 35, "", "", 0);
+        assertTrue(calendar.conflit(calendar.events.get(0),calendar.events.get(1)));
+    }
+
+    @Test
+    void ConflitHorraireFalse() {
+        CalendarManager calendar = new CalendarManager();
+        calendar.ajouterEvent("RDV_PERSONNEL", "rdvPerso", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), 35, "", "", 0);
+        calendar.ajouterEvent("RDV_PERSONNEL", "rdvPerso2", "Benoit", LocalDateTime.of(2026, 6, 14, 15, 45), 35, "", "", 0);
+        assertFalse(calendar.conflit(calendar.events.get(0),calendar.events.get(1)));
     }
 
 
