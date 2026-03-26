@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Object.DateEvent;
 import org.example.Object.Type;
 
 import java.time.LocalDateTime;
@@ -178,8 +179,8 @@ public class Main {
                         System.out.print("Durée (en minutes) : ");
                         int duree = Integer.parseInt(scanner.nextLine());
 
-                        calendar.ajouterEvent(Type.RDV_PERSONNEL, titre, utilisateur,
-                                LocalDateTime.of(annee, moisRdv, jourRdv, heure, minute), duree,
+                        calendar.ajouterEvent(Type.RDV_PERSONNEL, titre, utilisateur, new DateEvent(
+                                LocalDateTime.of(annee, moisRdv, jourRdv, heure, minute), duree),
                                 "", "", 0);
 
                         System.out.println("Événement ajouté.");
@@ -214,8 +215,8 @@ public class Main {
                             participants += ", " + scanner.nextLine();
                         }
 
-                        calendar.ajouterEvent(Type.REUNION, titre2, utilisateur,
-                                LocalDateTime.of(annee2, moisRdv2, jourRdv2, heure2, minute2), duree2,
+                        calendar.ajouterEvent(Type.REUNION, titre2, utilisateur, new  DateEvent(
+                                LocalDateTime.of(annee2, moisRdv2, jourRdv2, heure2, minute2), duree2),
                                 lieu, participants, 0);
 
                         System.out.println("Événement ajouté.");
@@ -238,8 +239,8 @@ public class Main {
                         System.out.print("Frequence (en jours) : ");
                         int frequence = Integer.parseInt(scanner.nextLine());
 
-                        calendar.ajouterEvent(Type.PERIODIQUE, titre3, utilisateur,
-                                LocalDateTime.of(annee3, moisRdv3, jourRdv3, heure3, minute3), 0,
+                        calendar.ajouterEvent(Type.PERIODIQUE, titre3, utilisateur, new  DateEvent(
+                                LocalDateTime.of(annee3, moisRdv3, jourRdv3, heure3, minute3), 0),
                                 "", "", frequence);
 
                         System.out.println("Événement ajouté.");

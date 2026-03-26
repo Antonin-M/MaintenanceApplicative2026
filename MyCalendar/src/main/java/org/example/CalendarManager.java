@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Object.DateEvent;
 import org.example.Object.Type;
 
 import java.time.LocalDateTime;
@@ -13,9 +14,9 @@ public class CalendarManager {
         this.events = new ArrayList<>();
     }
 
-    public void ajouterEvent(Type type, String title, String proprietaire, LocalDateTime dateDebut, int dureeMinutes,
+    public void ajouterEvent(Type type, String title, String proprietaire, DateEvent date,
                              String lieu, String participants, int frequenceJours) {
-        Event e = new Event(type, title, proprietaire, dateDebut, dureeMinutes, lieu, participants, frequenceJours);
+        Event e = new Event(type, title, proprietaire, date, lieu, participants, frequenceJours);
         events.add(e);
     }
 
@@ -23,7 +24,7 @@ public class CalendarManager {
         List<Event> result = new ArrayList<>();
         for (Event e : events) {
             if (e.type.equals(Type.PERIODIQUE)) {
-                LocalDateTime temp = e.dateDebut;
+                LocalDateTime temp = e.date.getDateDebut();
                 while (temp.isBefore(fin)) {
                     if (!temp.isBefore(debut)) {
                         result.add(e);
@@ -31,7 +32,7 @@ public class CalendarManager {
                     }
                     temp = temp.plusDays(e.frequenceJours);
                 }
-            } else if (!e.dateDebut.isBefore(debut) && !e.dateDebut.isAfter(fin)) {
+            } else if (!e.date.getDateDebut().isBefore(debut) && !e.date.getDateDebut().isAfter(fin)) {
                 result.add(e);
             }
         }
@@ -39,14 +40,14 @@ public class CalendarManager {
     }
 
     public boolean conflit(Event e1, Event e2) {
-        LocalDateTime fin1 = e1.dateDebut.plusMinutes(e1.dureeMinutes);
-        LocalDateTime fin2 = e2.dateDebut.plusMinutes(e2.dureeMinutes);
+        LocalDateTime fin1 = e1.date.getDateDebut().plusMinutes(e1.date.getDureeMinutes());
+        LocalDateTime fin2 = e2.date.getDateDebut().plusMinutes(e2.date.getDureeMinutes());
 
         if (e1.type.equals(Type.PERIODIQUE) || e2.type.equals(Type.PERIODIQUE)) {
             return false; // Simplification abusive
         }
 
-        if (e1.dateDebut.isBefore(fin2) && fin1.isAfter(e2.dateDebut)) {
+        if (e1.date.getDateDebut().isBefore(fin2) && fin1.isAfter(e2.date.getDateDebut())) {
             return true;
         }
         return false;
