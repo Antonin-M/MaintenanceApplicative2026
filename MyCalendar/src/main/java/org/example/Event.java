@@ -1,9 +1,11 @@
 package org.example;
 
+import org.example.Object.Type;
+
 import java.time.LocalDateTime;
 
 public class Event {
-    public String type; // "RDV_PERSONNEL", "REUNION", "PERIODIQUE"
+    public Type type;
     public String title;
     public String proprietaire;
     public LocalDateTime dateDebut;
@@ -12,7 +14,7 @@ public class Event {
     public String participants; // séparés par virgules (pour REUNION uniquement)
     public int frequenceJours; // uniquement pour PERIODIQUE
 
-    public Event(String type, String title, String proprietaire, LocalDateTime dateDebut, int dureeMinutes,
+    public Event(Type type, String title, String proprietaire, LocalDateTime dateDebut, int dureeMinutes,
                  String lieu, String participants, int frequenceJours) {
         this.type = type;
         this.title = title;
@@ -26,11 +28,11 @@ public class Event {
 
     public String description() {
         String desc = "";
-        if (type.equals("RDV_PERSONNEL")) {
+        if (type.equals(Type.RDV_PERSONNEL)) {
             desc = "RDV : " + title + " à " + dateDebut.toString();
-        } else if (type.equals("REUNION")) {
+        } else if (type.equals(Type.REUNION)) {
             desc = "Réunion : " + title + " à " + lieu + " avec " + participants;
-        } else if (type.equals("PERIODIQUE")) {
+        } else if (type.equals(Type.PERIODIQUE)) {
             desc = "Événement périodique : " + title + " tous les " + frequenceJours + " jours";
         }
         return desc;

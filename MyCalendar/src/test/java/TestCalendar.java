@@ -1,5 +1,6 @@
 import org.example.CalendarManager;
 import org.example.Event;
+import org.example.Object.Type;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
@@ -15,16 +16,15 @@ class TestCalendar {
         CalendarManager calendar = new CalendarManager();
         assertEquals(0, calendar.events.size());
 
-        //TODO REMPLACER TYPE PAR UN ENUM
         //TODO REMPLACER USER PAR UN ID
-        calendar.ajouterEvent("RDV_PERSONNEL","rdvPerso","Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), 30,"","",0);
-        calendar.ajouterEvent("REUNION","rdvReu","Bob",LocalDateTime.of(2026, 6, 15, 16, 40), 32,"","",0);
-        calendar.ajouterEvent("PERIODIQUE","rdvPerio","Pierre",LocalDateTime.of(2026, 7, 17, 17, 35), 33,"","",2);
+        calendar.ajouterEvent(Type.RDV_PERSONNEL,"rdvPerso","Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), 30,"","",0);
+        calendar.ajouterEvent(Type.REUNION,"rdvReu","Bob",LocalDateTime.of(2026, 6, 15, 16, 40), 32,"","",0);
+        calendar.ajouterEvent(Type.PERIODIQUE,"rdvPerio","Pierre",LocalDateTime.of(2026, 7, 17, 17, 35), 33,"","",2);
 
         assertEquals(3, calendar.events.size());
 
         //RDV PERSONNEL
-        assertEquals("RDV_PERSONNEL", calendar.events.get(0).type);
+        assertEquals(Type.RDV_PERSONNEL, calendar.events.get(0).type);
         assertEquals("rdvPerso", calendar.events.get(0).title);
         assertEquals("Benoit", calendar.events.get(0).proprietaire);
         assertEquals(LocalDateTime.of(2026, 5, 14, 15, 45), calendar.events.get(0).dateDebut);
@@ -32,7 +32,7 @@ class TestCalendar {
         assertEquals(0, calendar.events.get(0).frequenceJours);
 
         //RDV REUNION
-        assertEquals("REUNION", calendar.events.get(1).type);
+        assertEquals(Type.REUNION, calendar.events.get(1).type);
         assertEquals("rdvReu", calendar.events.get(1).title);
         assertEquals("Bob", calendar.events.get(1).proprietaire);
         assertEquals(LocalDateTime.of(2026, 6, 15, 16, 40), calendar.events.get(1).dateDebut);
@@ -40,7 +40,7 @@ class TestCalendar {
         assertEquals(0, calendar.events.get(1).frequenceJours);
 
         //RDV PERIODIQUE
-        assertEquals("PERIODIQUE", calendar.events.get(2).type);
+        assertEquals(Type.PERIODIQUE, calendar.events.get(2).type);
         assertEquals("rdvPerio", calendar.events.get(2).title);
         assertEquals("Pierre", calendar.events.get(2).proprietaire);
         assertEquals(LocalDateTime.of(2026, 7, 17, 17, 35), calendar.events.get(2).dateDebut);
@@ -53,12 +53,11 @@ class TestCalendar {
      CalendarManager calendar = new CalendarManager();
      assertEquals(0, calendar.events.size());
 
-     //TODO REMPLACER TYPE PAR UN ENUM
      //TODO REMPLACER USER PAR UN ID
 
-     calendar.ajouterEvent("RDV_PERSONNEL", "rdvPerso", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), -5, "", "", 0);
-     calendar.ajouterEvent("REUNION", "rdvReu", "Bob", LocalDateTime.of(2026, 6, 15, 16, 40), -32, "", "", 0);
-     calendar.ajouterEvent("PERIODIQUE", "rdvPerio", "Pierre", LocalDateTime.of(2026, 7, 17, 17, 35), 33, "", "", -1);
+     calendar.ajouterEvent(Type.RDV_PERSONNEL, "rdvPerso", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), -5, "", "", 0);
+     calendar.ajouterEvent(Type.REUNION, "rdvReu", "Bob", LocalDateTime.of(2026, 6, 15, 16, 40), -32, "", "", 0);
+     calendar.ajouterEvent(Type.PERIODIQUE, "rdvPerio", "Pierre", LocalDateTime.of(2026, 7, 17, 17, 35), 33, "", "", -1);
 
      assertEquals(0, calendar.events.size());
     }
@@ -72,7 +71,7 @@ class TestCalendar {
     @Test
     void RecupererDansPeriode() {
      CalendarManager calendar = new CalendarManager();
-     calendar.ajouterEvent("RDV_PERSONNEL", "rdvPerso", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), 35, "", "", 0);
+     calendar.ajouterEvent(Type.RDV_PERSONNEL, "rdvPerso", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), 35, "", "", 0);
      assertEquals(calendar.events, calendar.eventsDansPeriode(LocalDateTime.of(2026, 4, 14, 15, 45), LocalDateTime.of(2026, 6, 14, 15, 45)));
 
     }
@@ -80,16 +79,16 @@ class TestCalendar {
     @Test
     void ConflitHorraireTrue() {
        CalendarManager calendar = new CalendarManager();
-        calendar.ajouterEvent("RDV_PERSONNEL", "rdvPerso", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), 35, "", "", 0);
-        calendar.ajouterEvent("RDV_PERSONNEL", "rdvPerso2", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 50), 35, "", "", 0);
+        calendar.ajouterEvent(Type.RDV_PERSONNEL, "rdvPerso", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), 35, "", "", 0);
+        calendar.ajouterEvent(Type.RDV_PERSONNEL, "rdvPerso2", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 50), 35, "", "", 0);
         assertTrue(calendar.conflit(calendar.events.get(0),calendar.events.get(1)));
     }
 
     @Test
     void ConflitHorraireFalse() {
         CalendarManager calendar = new CalendarManager();
-        calendar.ajouterEvent("RDV_PERSONNEL", "rdvPerso", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), 35, "", "", 0);
-        calendar.ajouterEvent("RDV_PERSONNEL", "rdvPerso2", "Benoit", LocalDateTime.of(2026, 6, 14, 15, 45), 35, "", "", 0);
+        calendar.ajouterEvent(Type.RDV_PERSONNEL, "rdvPerso", "Benoit", LocalDateTime.of(2026, 5, 14, 15, 45), 35, "", "", 0);
+        calendar.ajouterEvent(Type.RDV_PERSONNEL, "rdvPerso2", "Benoit", LocalDateTime.of(2026, 6, 14, 15, 45), 35, "", "", 0);
         assertFalse(calendar.conflit(calendar.events.get(0),calendar.events.get(1)));
     }
 

@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.Object.Type;
+
 import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
 import java.util.List;
@@ -176,7 +178,7 @@ public class Main {
                         System.out.print("Durée (en minutes) : ");
                         int duree = Integer.parseInt(scanner.nextLine());
 
-                        calendar.ajouterEvent("RDV_PERSONNEL", titre, utilisateur,
+                        calendar.ajouterEvent(Type.RDV_PERSONNEL, titre, utilisateur,
                                 LocalDateTime.of(annee, moisRdv, jourRdv, heure, minute), duree,
                                 "", "", 0);
 
@@ -212,7 +214,7 @@ public class Main {
                             participants += ", " + scanner.nextLine();
                         }
 
-                        calendar.ajouterEvent("REUNION", titre2, utilisateur,
+                        calendar.ajouterEvent(Type.REUNION, titre2, utilisateur,
                                 LocalDateTime.of(annee2, moisRdv2, jourRdv2, heure2, minute2), duree2,
                                 lieu, participants, 0);
 
@@ -236,7 +238,7 @@ public class Main {
                         System.out.print("Frequence (en jours) : ");
                         int frequence = Integer.parseInt(scanner.nextLine());
 
-                        calendar.ajouterEvent("PERIODIQUE", titre3, utilisateur,
+                        calendar.ajouterEvent(Type.PERIODIQUE, titre3, utilisateur,
                                 LocalDateTime.of(annee3, moisRdv3, jourRdv3, heure3, minute3), 0,
                                 "", "", frequence);
 
