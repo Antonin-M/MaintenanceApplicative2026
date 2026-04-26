@@ -5,15 +5,15 @@ import org.example.Event;
 import java.time.LocalDateTime;
 
 public class PeriodiqueEvent extends Event {
-    public PeriodiqueEvent(EventId id, Title title, String proprietaire, DateEvent date, int frequenceJours) {
-        super(id, Type.PERIODIQUE, title, proprietaire, date, "", "", frequenceJours);
+    public PeriodiqueEvent(EventId id, Title title, Proprietaire proprietaire, DateEvent date, FrequenceJours frequenceJours) {
+        super(id, Type.PERIODIQUE, title, proprietaire, date, new Lieu(""), new Participants(""), frequenceJours);
     }
 
     @Override
     public boolean estDansPeriode(LocalDateTime debut, LocalDateTime fin) {
         LocalDateTime occur = date.dateDebut();
         while(occur.isBefore(debut)) {
-            occur = occur.plusDays(frequenceJours);
+            occur = occur.plusDays(frequenceJours.value());
         }
         return occur.isBefore(fin);
     }

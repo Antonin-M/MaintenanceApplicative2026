@@ -1,8 +1,6 @@
 package org.example;
 
-import org.example.Object.DateEvent;
-import org.example.Object.Title;
-import org.example.Object.Type;
+import org.example.Object.*;
 
 import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
@@ -180,9 +178,9 @@ public class Main {
                         System.out.print("Durée (en minutes) : ");
                         int duree = Integer.parseInt(scanner.nextLine());
 
-                        calendar.ajouterEvent(Type.RDV_PERSONNEL, titre, utilisateur, new DateEvent(
+                        calendar.ajouterEvent(Type.RDV_PERSONNEL, titre, new Proprietaire(utilisateur), new DateEvent(
                                 LocalDateTime.of(annee, moisRdv, jourRdv, heure, minute), duree),
-                                "", "", 0);
+                                new Lieu(""), new Participants(""), new FrequenceJours(0));
 
                         System.out.println("Événement ajouté.");
                         break;
@@ -204,7 +202,7 @@ public class Main {
                         System.out.print("Durée (en minutes) : ");
                         int duree2 = Integer.parseInt(scanner.nextLine());
                         System.out.println("Lieu :");
-                        String lieu = scanner.nextLine();
+                        Lieu lieu = new Lieu(scanner.nextLine());
                         
                         String participants = utilisateur;
                         
@@ -216,9 +214,11 @@ public class Main {
                             participants += ", " + scanner.nextLine();
                         }
 
-                        calendar.ajouterEvent(Type.REUNION, titre2, utilisateur, new  DateEvent(
+                        Participants participants2 = new Participants(participants);
+
+                        calendar.ajouterEvent(Type.REUNION, titre2, new Proprietaire(utilisateur), new  DateEvent(
                                 LocalDateTime.of(annee2, moisRdv2, jourRdv2, heure2, minute2), duree2),
-                                lieu, participants, 0);
+                                lieu, participants2, new FrequenceJours(0));
 
                         System.out.println("Événement ajouté.");
                         break;
@@ -238,11 +238,11 @@ public class Main {
                         System.out.print("Minute début (0-59) : ");
                         int minute3 = Integer.parseInt(scanner.nextLine());
                         System.out.print("Frequence (en jours) : ");
-                        int frequence = Integer.parseInt(scanner.nextLine());
+                        FrequenceJours frequence = new FrequenceJours(Integer.parseInt(scanner.nextLine()));
 
-                        calendar.ajouterEvent(Type.PERIODIQUE, titre3, utilisateur, new  DateEvent(
+                        calendar.ajouterEvent(Type.PERIODIQUE, titre3, new Proprietaire(utilisateur), new  DateEvent(
                                 LocalDateTime.of(annee3, moisRdv3, jourRdv3, heure3, minute3), 0),
-                                "", "", frequence);
+                                new Lieu(""), new Participants(""), frequence);
 
                         System.out.println("Événement ajouté.");
                         break;

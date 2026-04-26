@@ -5,8 +5,8 @@ import org.example.Event;
 import java.time.LocalDateTime;
 
 public class RdvPersonnelEvent extends Event {
-    public RdvPersonnelEvent(EventId id, Title title, String proprietaire, DateEvent date) {
-        super(id, Type.RDV_PERSONNEL, title, proprietaire, date, "", "", 0);
+    public RdvPersonnelEvent(EventId id, Title title, Proprietaire proprietaire, DateEvent date) {
+        super(id, Type.RDV_PERSONNEL, title, proprietaire, date, new Lieu(""), new Participants(""), new FrequenceJours(0));
     }
 
     @Override

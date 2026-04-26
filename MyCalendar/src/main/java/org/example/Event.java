@@ -1,9 +1,6 @@
 package org.example;
 
-import org.example.Object.DateEvent;
-import org.example.Object.EventId;
-import org.example.Object.Title;
-import org.example.Object.Type;
+import org.example.Object.*;
 
 import java.time.LocalDateTime;
 
@@ -11,14 +8,14 @@ public abstract class Event {
     public EventId id;
     public Type type;
     public Title title;
-    public String proprietaire;
+    public Proprietaire proprietaire;
     public DateEvent date;
-    public String lieu; // utilisé seulement pour REUNION
-    public String participants; // séparés par virgules (pour REUNION uniquement)
-    public int frequenceJours; // uniquement pour PERIODIQUE
+    public Lieu lieu; // utilisé seulement pour REUNION
+    public Participants participants; // séparés par virgules (pour REUNION uniquement)
+    public FrequenceJours frequenceJours; // uniquement pour PERIODIQUE
 
-    public Event(EventId id, Type type, Title title, String proprietaire, DateEvent date,
-                 String lieu, String participants, int frequenceJours) {
+    public Event(EventId id, Type type, Title title, Proprietaire proprietaire, DateEvent date,
+                 Lieu lieu, Participants participants, FrequenceJours frequenceJours) {
         this.id = id;
         this.type = type;
         this.title = title;

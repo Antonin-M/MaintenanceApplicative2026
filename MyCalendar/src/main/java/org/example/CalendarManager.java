@@ -1,9 +1,6 @@
 package org.example;
 
-import org.example.Object.DateEvent;
-import org.example.Object.EventId;
-import org.example.Object.Title;
-import org.example.Object.Type;
+import org.example.Object.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,8 +13,8 @@ public class CalendarManager {
         this.events = new ArrayList<>();
     }
 
-    public void ajouterEvent(Type type, Title title, String proprietaire, DateEvent date,
-                             String lieu, String participants, int frequenceJours) {
+    public void ajouterEvent(Type type, Title title, Proprietaire proprietaire, DateEvent date,
+                             Lieu lieu, Participants participants, FrequenceJours frequenceJours) {
 
         java.util.Optional.ofNullable(type)
                 .filter(t -> t.peutAjouter(date, frequenceJours))
