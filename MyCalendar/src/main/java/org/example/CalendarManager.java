@@ -38,17 +38,7 @@ public class CalendarManager {
     }
 
     public boolean conflit(Event e1, Event e2) {
-        LocalDateTime fin1 = e1.date.dateDebut().plusMinutes(e1.date.dureeMinutes());
-        LocalDateTime fin2 = e2.date.dateDebut().plusMinutes(e2.date.dureeMinutes());
-
-        if (e1.type.equals(Type.PERIODIQUE) || e2.type.equals(Type.PERIODIQUE)) {
-            return false; // Simplification abusive
-        }
-
-        if (e1.date.dateDebut().isBefore(fin2) && fin1.isAfter(e2.date.dateDebut())) {
-            return true;
-        }
-        return false;
+        return e1.conflitAvec(e2);
     }
 
     public void afficherEvenements() {

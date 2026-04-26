@@ -33,6 +33,12 @@ public abstract class Event {
         return !date.dateDebut().isBefore(debut) && !date.dateDebut().isAfter(fin);
     }
 
+    public boolean conflitAvec(Event autreEvent) {
+        LocalDateTime fin1 = date.dateDebut().plusMinutes(date.dureeMinutes());
+        LocalDateTime fin2 = autreEvent.date.dateDebut().plusMinutes(autreEvent.date.dureeMinutes());
+        return date.dateDebut().isBefore(fin2) &&fin1.isAfter(autreEvent.date.dateDebut());
+    }
+
     public abstract boolean estDansPeriode(LocalDateTime debut, LocalDateTime fin);
 
     public abstract String description();
