@@ -7,7 +7,7 @@ import org.example.Object.Type;
 
 import java.time.LocalDateTime;
 
-public class Event {
+public abstract class Event {
     public EventId id;
     public Type type;
     public Title title;
@@ -29,15 +29,5 @@ public class Event {
         this.frequenceJours = frequenceJours;
     }
 
-    public String description() {
-        String desc = "";
-        if (type.equals(Type.RDV_PERSONNEL)) {
-            desc = "RDV : " + title.title() + " à " + date.dateDebut().toString();
-        } else if (type.equals(Type.REUNION)) {
-            desc = "Réunion : " + title.title() + " à " + lieu + " avec " + participants;
-        } else if (type.equals(Type.PERIODIQUE)) {
-            desc = "Événement périodique : " + title.title() + " tous les " + frequenceJours + " jours";
-        }
-        return desc;
-    }
+    public abstract String description();
 }
