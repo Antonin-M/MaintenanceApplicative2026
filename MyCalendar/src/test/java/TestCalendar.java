@@ -1,6 +1,7 @@
 import org.example.CalendarManager;
 import org.example.Event;
 import org.example.Object.DateEvent;
+import org.example.Object.EventId;
 import org.example.Object.Title;
 import org.example.Object.Type;
 import org.junit.jupiter.api.Test;
@@ -133,7 +134,7 @@ class TestCalendar {
         calendar.ajouterEvent(Type.REUNION, new Title("reu"), "Bob", new DateEvent(LocalDateTime.of(2026, 5, 14, 16, 45), 30), "", "Bob", 0);
         assertEquals(2, calendar.events.size());
 
-        var idADelete = calendar.events.get(0).id;
+        EventId idADelete = calendar.events.get(0).id;
 
         assertTrue(calendar.supprimerEvent(idADelete));
         assertEquals(1, calendar.events.size());

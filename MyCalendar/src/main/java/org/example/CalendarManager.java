@@ -23,13 +23,12 @@ public class CalendarManager {
         if (date.dureeMinutes() <=0) return;
         if (type.equals(Type.PERIODIQUE) && frequenceJours <= 0) return;
 
-        Event e = new Event(type, title, proprietaire, date, lieu, participants, frequenceJours);
+        Event e = new Event(EventId.nouveauId(), type, title, proprietaire, date, lieu, participants, frequenceJours);
         events.add(e);
     }
 
     public boolean supprimerEvent(EventId id) {
-        //TODO
-        return true;
+        return events.removeIf( e -> e.id.equals(id));
     }
 
     public List<Event> eventsDansPeriode(LocalDateTime debut, LocalDateTime fin) {

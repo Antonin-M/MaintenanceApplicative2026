@@ -17,8 +17,9 @@ public class Event {
     public String participants; // séparés par virgules (pour REUNION uniquement)
     public int frequenceJours; // uniquement pour PERIODIQUE
 
-    public Event(Type type, Title title, String proprietaire, DateEvent date,
+    public Event(EventId id, Type type, Title title, String proprietaire, DateEvent date,
                  String lieu, String participants, int frequenceJours) {
+        this.id = id;
         this.type = type;
         this.title = title;
         this.proprietaire = proprietaire;
