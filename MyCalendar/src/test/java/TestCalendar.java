@@ -1,9 +1,6 @@
 import org.example.CalendarManager;
 import org.example.Event;
-import org.example.Object.DateEvent;
-import org.example.Object.EventId;
-import org.example.Object.Title;
-import org.example.Object.Type;
+import org.example.Object.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
@@ -141,6 +138,32 @@ class TestCalendar {
         assertNotEquals(idADelete, calendar.events.get(0).id);
 
         assertFalse(calendar.supprimerEvent(idADelete));
+    }
+
+    @Test
+    void proprietaireValide() {
+        Proprietaire proprietaire = new Proprietaire("Benoit");
+        assertEquals("Benoit", proprietaire.value());
+    }
+
+
+    @Test
+    void lieuValide() {
+        Lieu lieu = new Lieu("Bureau");
+        assertEquals("Bureau", lieu.value());
+    }
+
+
+    @Test
+    void ParticipantsValide() {
+        Participants participants = new Participants("Benoit");
+        assertEquals("Benoit", participants.value());
+    }
+
+    @Test
+    void frequenceJoursValide() {
+        FrequenceJours f = new FrequenceJours(3);
+        assertEquals(3, f.value());
     }
 
 
