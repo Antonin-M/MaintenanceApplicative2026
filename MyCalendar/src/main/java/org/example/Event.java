@@ -1,12 +1,14 @@
 package org.example;
 
 import org.example.Object.DateEvent;
+import org.example.Object.EventId;
 import org.example.Object.Title;
 import org.example.Object.Type;
 
 import java.time.LocalDateTime;
 
 public class Event {
+    public EventId id;
     public Type type;
     public Title title;
     public String proprietaire;

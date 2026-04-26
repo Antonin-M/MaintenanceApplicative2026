@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.Object.DateEvent;
+import org.example.Object.EventId;
 import org.example.Object.Title;
 import org.example.Object.Type;
 
@@ -17,8 +18,18 @@ public class CalendarManager {
 
     public void ajouterEvent(Type type, Title title, String proprietaire, DateEvent date,
                              String lieu, String participants, int frequenceJours) {
+
+        //J'empêche une durée ou fréquence négative
+        if (date.dureeMinutes() <=0) return;
+        if (type.equals(Type.PERIODIQUE) && frequenceJours <= 0) return;
+
         Event e = new Event(type, title, proprietaire, date, lieu, participants, frequenceJours);
         events.add(e);
+    }
+
+    public boolean supprimerEvent(EventId id) {
+        //TODO
+        return true;
     }
 
     public List<Event> eventsDansPeriode(LocalDateTime debut, LocalDateTime fin) {

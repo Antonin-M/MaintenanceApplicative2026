@@ -125,6 +125,24 @@ class TestCalendar {
         assertEquals("", calendar.events.get(0).description());
     }
 
+    @Test
+    void supprimerEventParId() {
+        CalendarManager calendar = new CalendarManager();
+
+        calendar.ajouterEvent(Type.RDV_PERSONNEL, new Title("rdvPerso"), "Benoit", new DateEvent(LocalDateTime.of(2026, 5, 14, 15, 45), 30), "", "", 0);
+        calendar.ajouterEvent(Type.REUNION, new Title("reu"), "Bob", new DateEvent(LocalDateTime.of(2026, 5, 14, 16, 45), 30), "", "Bob", 0);
+        assertEquals(2, calendar.events.size());
+
+        var idADelete = calendar.events.get(0).id;
+
+        assertTrue(calendar.supprimerEvent(idADelete));
+        assertEquals(1, calendar.events.size());
+        assertNotEquals(idADelete, calendar.events.get(0).id);
+
+        assertFalse(calendar.supprimerEvent(idADelete));
+    }
+
+
 
 
 }
