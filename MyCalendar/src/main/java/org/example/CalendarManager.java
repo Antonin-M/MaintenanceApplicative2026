@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.Object.DateEvent;
+import org.example.Object.Title;
 import org.example.Object.Type;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ public class CalendarManager {
         this.events = new ArrayList<>();
     }
 
-    public void ajouterEvent(Type type, String title, String proprietaire, DateEvent date,
+    public void ajouterEvent(Type type, Title title, String proprietaire, DateEvent date,
                              String lieu, String participants, int frequenceJours) {
         Event e = new Event(type, title, proprietaire, date, lieu, participants, frequenceJours);
         events.add(e);
@@ -24,7 +25,7 @@ public class CalendarManager {
         List<Event> result = new ArrayList<>();
         for (Event e : events) {
             if (e.type.equals(Type.PERIODIQUE)) {
-                LocalDateTime temp = e.date.getDateDebut();
+                LocalDateTime temp = e.date.dateDebut();
                 while (temp.isBefore(fin)) {
                     if (!temp.isBefore(debut)) {
                         result.add(e);
@@ -32,7 +33,7 @@ public class CalendarManager {
                     }
                     temp = temp.plusDays(e.frequenceJours);
                 }
-            } else if (!e.date.getDateDebut().isBefore(debut) && !e.date.getDateDebut().isAfter(fin)) {
+            } else if (!e.date.dateDebut().isBefore(debut) && !e.date.dateDebut().isAfter(fin)) {
                 result.add(e);
             }
         }
@@ -40,14 +41,14 @@ public class CalendarManager {
     }
 
     public boolean conflit(Event e1, Event e2) {
-        LocalDateTime fin1 = e1.date.getDateDebut().plusMinutes(e1.date.getDureeMinutes());
-        LocalDateTime fin2 = e2.date.getDateDebut().plusMinutes(e2.date.getDureeMinutes());
+        LocalDateTime fin1 = e1.date.dateDebut().plusMinutes(e1.date.dureeMinutes());
+        LocalDateTime fin2 = e2.date.dateDebut().plusMinutes(e2.date.dureeMinutes());
 
         if (e1.type.equals(Type.PERIODIQUE) || e2.type.equals(Type.PERIODIQUE)) {
             return false; // Simplification abusive
         }
 
-        if (e1.date.getDateDebut().isBefore(fin2) && fin1.isAfter(e2.date.getDateDebut())) {
+        if (e1.date.dateDebut().isBefore(fin2) && fin1.isAfter(e2.date.dateDebut())) {
             return true;
         }
         return false;
