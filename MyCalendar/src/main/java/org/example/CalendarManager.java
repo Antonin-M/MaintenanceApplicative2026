@@ -19,12 +19,10 @@ public class CalendarManager {
     public void ajouterEvent(Type type, Title title, String proprietaire, DateEvent date,
                              String lieu, String participants, int frequenceJours) {
 
-        //J'empêche une durée ou fréquence négative
-        if (date.dureeMinutes() <=0) return;
-        if (type.equals(Type.PERIODIQUE) && frequenceJours <= 0) return;
-
-        Event e = type.creer(EventId.nouveauId(), title, proprietaire, date, lieu, participants, frequenceJours);
-        events.add(e);
+        java.util.Optional.ofNullable(type)
+                .filter(t -> t.peutAjouter(date, frequenceJours))
+                .map(t -> t.creer(EventId.nouveauId(), title, proprietaire, date, lieu, participants, frequenceJours))
+                .ifPresent(events::add);
     }
 
     public boolean supprimerEvent(EventId id) {
