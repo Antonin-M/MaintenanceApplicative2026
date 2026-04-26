@@ -2,9 +2,16 @@ package org.example.Object;
 
 import org.example.Event;
 
+import java.time.LocalDateTime;
+
 public class ReunionEvent extends Event {
     public ReunionEvent(EventId id, Title title, String proprietaire, DateEvent date, String lieu, String participants) {
         super(id, Type.REUNION, title, proprietaire, date, lieu, participants, 0);
+    }
+
+    @Override
+    public boolean estDansPeriode(LocalDateTime debut, LocalDateTime fin) {
+        return estDansIntervalle(debut, fin);
     }
 
     public String description() {

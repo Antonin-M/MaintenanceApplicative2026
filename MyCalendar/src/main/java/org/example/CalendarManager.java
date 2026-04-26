@@ -32,22 +32,9 @@ public class CalendarManager {
     }
 
     public List<Event> eventsDansPeriode(LocalDateTime debut, LocalDateTime fin) {
-        List<Event> result = new ArrayList<>();
-        for (Event e : events) {
-            if (e.type.equals(Type.PERIODIQUE)) {
-                LocalDateTime temp = e.date.dateDebut();
-                while (temp.isBefore(fin)) {
-                    if (!temp.isBefore(debut)) {
-                        result.add(e);
-                        break;
-                    }
-                    temp = temp.plusDays(e.frequenceJours);
-                }
-            } else if (!e.date.dateDebut().isBefore(debut) && !e.date.dateDebut().isAfter(fin)) {
-                result.add(e);
-            }
-        }
-        return result;
+        return events.stream()
+                .filter(e -> e.estDansPeriode(debut, fin))
+                .toList();
     }
 
     public boolean conflit(Event e1, Event e2) {

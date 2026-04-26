@@ -29,5 +29,11 @@ public abstract class Event {
         this.frequenceJours = frequenceJours;
     }
 
+    protected boolean estDansIntervalle(LocalDateTime debut, LocalDateTime fin) {
+        return !date.dateDebut().isBefore(debut) && !date.dateDebut().isAfter(fin);
+    }
+
+    public abstract boolean estDansPeriode(LocalDateTime debut, LocalDateTime fin);
+
     public abstract String description();
 }
